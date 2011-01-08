@@ -41,6 +41,11 @@
 							'delegate' => 'AdminPagePreGenerate',
 							'callback' => 'preGenerate'
 						),
+						array(
+							'page' => '/frontend/',
+							'delegate' => 'EventPreSaveFilter',
+							'callback' => 'preEvent'
+						),
 						
 					);
 		}
@@ -117,6 +122,14 @@
 				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new")) || $page["oPage"]->_Parent->Page instanceof contentSystemAuthors) {
 					$this->disableInputs(&$page["oPage"]->Form);
 				}
+			}
+		}
+		
+		public function preEvent($context) {
+			if($context["parent"]->Configuration->get('enabled', 'readonly_mode') == 'yes') {
+				$context['messages'][] = array(
+					'readonly', FALSE, __("Events have been disabled temporarily.")
+				);
 			}
 		}
 		

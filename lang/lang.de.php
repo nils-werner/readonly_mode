@@ -32,5 +32,8 @@
 		
 		'Restore?' =>
 		'Seite freischalten?',
+		
+		'Events have been disabled temporarily.' =>
+		'Ereignisse wurden vorübergehend deaktiviert.',
 
 	);
