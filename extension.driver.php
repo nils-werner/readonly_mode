@@ -30,6 +30,13 @@
 							'delegate' => 'AppendPageAlert',
 							'callback' => '__appendAlert'
 						),	
+
+						array(
+							'page' => '/backend/',
+							'delegate' => 'AdminPagePreGenerate',
+							'callback' => 'preGenerate'
+						),
+						
 					);
 		}
 		
@@ -82,5 +89,28 @@
 									
 			$context['wrapper']->appendChild($group);
 						
+		}
+		
+		
+				
+		public function preGenerate($page) {
+			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes') {
+				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new"))) {
+					$this->disableInputs(&$page["oPage"]->Form);
+				}
+			}
+		}
+		
+		private function disableInputs($element) {
+			if(in_array($element->getName(), array("input", "select", "textarea", "button")))
+				$element->setAttribute("disabled","disabled");
+				
+			if($element->getAttribute("name") == "action[delete]") {
+				$element->setAttribute("style", "cursor: default;");
+				$element->setAttribute("class", NULL);
+			}
+			
+			foreach($element->getChildren() AS $child)
+				$this->disableInputs(&$child);
 		}
 	}
