@@ -29,7 +29,12 @@
 							'page' => '/backend/',
 							'delegate' => 'AppendPageAlert',
 							'callback' => '__appendAlert'
-						),	
+						),
+						array(
+							'page' => '/system/preferences/',
+							'delegate' => 'CustomActions',
+							'callback' => '__toggleReadonlyMode'
+						),
 
 						array(
 							'page' => '/backend/',
@@ -59,7 +64,10 @@
 			if(!is_null($context['alert'])) return;
 			
 			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes'){
-				Administration::instance()->Page->pageAlert(__('This site is currently in readonly mode.') . ' <a href="' . URL . '/symphony/system/preferences/?action=toggle-readonly-mode&amp;redirect=' . getCurrentPage() . '">' . __('Restore?') . '</a>', Alert::NOTICE);
+				$text = __('This site is currently in readonly mode.');
+				if($this->isDeveloper())
+					$text .= ' <a href="' . URL . '/symphony/system/preferences/?action=toggle-readonly-mode&amp;redirect=' . getCurrentPage() . '">' . __('Restore?') . '</a>';
+				Administration::instance()->Page->pageAlert($text, Alert::NOTICE);
 			}
 		}
 		
@@ -91,11 +99,22 @@
 						
 		}
 		
+		public function __toggleReadonlyMode($context){
+			
+			if($_REQUEST['action'] == 'toggle-readonly-mode'){			
+				$value = (Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'no' ? 'yes' : 'no');					
+				Administration::instance()->Configuration->set('enabled', $value, 'readonly_mode');
+				Administration::instance()->saveConfig();
+				redirect((isset($_REQUEST['redirect']) ? URL . '/symphony' . $_REQUEST['redirect'] : $this->_Parent->getCurrentPageURL() . '/'));
+			}
+			
+		}
+		
 		
 				
 		public function preGenerate($page) {
-			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes') {
-				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new"))) {
+			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes' && !$this->isDeveloper()) {
+				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new")) || $page["oPage"]->_Parent->Page instanceof contentSystemAuthors) {
 					$this->disableInputs(&$page["oPage"]->Form);
 				}
 			}
@@ -112,5 +131,9 @@
 			
 			foreach($element->getChildren() AS $child)
 				$this->disableInputs(&$child);
+		}
+		
+		private function isDeveloper() {
+			return !is_null(Administration::instance()->Author) && Administration::instance()->Author->isDeveloper();
 		}
 	}
