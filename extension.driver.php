@@ -54,13 +54,13 @@
 		}
 		
 		public function install(){
-			Administration::instance()->Configuration->set('enabled', 'no','readonly_mode');
+			Symphony::Configuration()->set('enabled', 'no','readonly_mode');
 			Administration::instance()->saveConfig();
 			return true;
 		}
 		
 		public function uninstall(){
-			Administration::instance()->Configuration->remove('readonly_mode');
+			Symphony::Configuration()->remove('readonly_mode');
 			Administration::instance()->saveConfig();
 		}
 		
@@ -68,7 +68,7 @@
 			
 			if(!is_null($context['alert'])) return;
 			
-			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes'){
+			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes'){
 				$text = __('This site is currently in readonly mode.');
 				if($this->isDeveloper())
 					$text .= ' <a href="' . URL . '/symphony/system/preferences/?action=toggle-readonly-mode&amp;redirect=' . getCurrentPage() . '">' . __('Restore?') . '</a>';
@@ -94,7 +94,7 @@
 			
 			$label = Widget::Label();
 			$input = Widget::Input('settings[readonly_mode][enabled]', 'yes', 'checkbox');
-			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes') $input->setAttribute('checked', 'checked');
+			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes') $input->setAttribute('checked', 'checked');
 			$label->setValue($input->generate() . ' ' . __('Enable readonly mode'));
 			$group->appendChild($label);
 						
@@ -107,8 +107,8 @@
 		public function __toggleReadonlyMode($context){
 			
 			if($_REQUEST['action'] == 'toggle-readonly-mode'){			
-				$value = (Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'no' ? 'yes' : 'no');					
-				Administration::instance()->Configuration->set('enabled', $value, 'readonly_mode');
+				$value = (Symphony::Configuration()->get('enabled', 'readonly_mode') == 'no' ? 'yes' : 'no');					
+				Symphony::Configuration()->set('enabled', $value, 'readonly_mode');
 				Administration::instance()->saveConfig();
 				redirect((isset($_REQUEST['redirect']) ? URL . '/symphony' . $_REQUEST['redirect'] : $this->_Parent->getCurrentPageURL() . '/'));
 			}
@@ -118,7 +118,7 @@
 		
 				
 		public function preGenerate($page) {
-			if(Administration::instance()->Configuration->get('enabled', 'readonly_mode') == 'yes' && !$this->isDeveloper()) {
+			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes' && !$this->isDeveloper()) {
 				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new")) || $page["oPage"]->_Parent->Page instanceof contentSystemAuthors) {
 					$this->disableInputs(&$page["oPage"]->Form);
 				}
