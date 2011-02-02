@@ -2,9 +2,9 @@
 
 This extension enables a Readonly mode for Symphony.  
 
-- Version: 1.0
-- Date: 8th Jan 2011
-- Requirements: Symphony 2.0.x
+- Version: 1.1
+- Date: 2nd Feb 2011
+- Requirements: Symphony 2.2
 - Author: Nils Werner, nils.werner@gmail.com
 - Constributors: [A list of contributors can be found in the commit history](http://github.com/nils-werner/readonly_mode/commits/master)
 - GitHub Repository: <http://github.com/nils-werner/readonly_mode>
@@ -22,3 +22,7 @@ Information about [installing and updating extensions](http://symphony-cms.com/l
 **Version 1.0**
 
 - Initial Version. Supports readonly mode for backend and events.
+
+**Version 1.1**
+
+- Compatibility with Symphony 2.2

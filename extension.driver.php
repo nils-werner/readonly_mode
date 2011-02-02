@@ -4,8 +4,8 @@
 
 		public function about(){
 			return array('name' => 'Readonly Mode',
-						 'version' => '1.0',
-						 'release-date' => '2010-01-08',
+						 'version' => '1.1',
+						 'release-date' => '2010-02-02',
 						 'author' => array('name' => 'Nils Werner',
 										   'website' => 'http://www.phoque.de',
 										   'email' => 'nils.werner@gmail.com')
