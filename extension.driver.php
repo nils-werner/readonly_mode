@@ -46,6 +46,11 @@
 							'delegate' => 'EventPreSaveFilter',
 							'callback' => 'preEvent'
 						),
+						array(
+							'page' => '/frontend/',
+							'delegate' => 'FrontendParamsResolve',
+							'callback' => '__addParam'
+						)
 						
 					);
 		}
@@ -148,5 +153,9 @@
 		
 		private function isDeveloper() {
 			return !is_null(Administration::instance()->Author) && Administration::instance()->Author->isDeveloper();
+		}
+
+		public function __addParam($context) {
+			$context['params']['readonly-mode'] = (Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes' ? 'yes' : 'no'); 
 		}
 	}
