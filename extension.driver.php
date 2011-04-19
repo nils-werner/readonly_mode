@@ -120,7 +120,7 @@
 		public function preGenerate($page) {
 			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes' && !$this->isDeveloper()) {
 				if(in_array($page["oPage"]->_context["page"], array("edit", "index", "new")) || $page["oPage"]->_Parent->Page instanceof contentSystemAuthors) {
-					$this->disableInputs(&$page["oPage"]->Form);
+					$this->disableInputs($page["oPage"]->Form);
 				}
 			}
 		}
@@ -133,7 +133,7 @@
 			}
 		}
 		
-		private function disableInputs($element) {
+		private function disableInputs(&$element) {
 			if(in_array($element->getName(), array("input", "select", "textarea", "button")))
 				$element->setAttribute("disabled","disabled");
 				
@@ -143,7 +143,7 @@
 			}
 			
 			foreach($element->getChildren() AS $child)
-				$this->disableInputs(&$child);
+				$this->disableInputs($child);
 		}
 		
 		private function isDeveloper() {
