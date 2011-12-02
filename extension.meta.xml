@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="readonly_mode">
+	<name>Readonly Mode</name>
+	<description>Prevents your users from changing stuff when they really shouldn't.</description>
+	<repo type="github">https://github.com/nils-werner/readonly_mode</repo>
+	<url type="discuss">http://symphony-cms.com/discuss/thread/58957/</url>
+	<types>
+		<type>Workflow</type>
+	</types>
+	<authors>
+		<author>
+			<name github="nils-werner" symphony="phoque">Nils Werner</name>
+			<website>http://www.phoque.de/</website>
+		</author>
+	</authors>
+	<media>
+		<item type="image" url="http://symphonyextensions.com/nils-werner/readonly_mode/media/readonly_mode.png">Readonly Mode: Prevents your users from changing stuff when they really shouldn't.</item>
+	</media>
+	<releases>
+		<release version="1.1" date="2011-02-27" min="2.1.2" />
+	</releases>
+</extension>
