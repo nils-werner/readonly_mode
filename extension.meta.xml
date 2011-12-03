@@ -4,6 +4,7 @@
 	<description>Prevents your users from changing stuff when they really shouldn't.</description>
 	<repo type="github">https://github.com/nils-werner/readonly_mode</repo>
 	<url type="discuss">http://symphony-cms.com/discuss/thread/58957/</url>
+	<url type="issues">https://github.com/nils-werner/readonly_mode/issues</url>
 	<types>
 		<type>Workflow</type>
 	</types>
@@ -17,6 +18,8 @@
 		<item type="image" url="http://symphonyextensions.com/nils-werner/readonly_mode/media/readonly_mode.png">Readonly Mode: Prevents your users from changing stuff when they really shouldn't.</item>
 	</media>
 	<releases>
-		<release version="1.1" date="2011-02-27" min="2.1.2" />
+		<release version="1.2" date="2011-04-23" min="2.2" />
+		<release version="1.1" date="2011-02-02" min="2.2" />
+		<release version="1.0" date="2011-01-08" min="2.0.1" />
 	</releases>
 </extension>
