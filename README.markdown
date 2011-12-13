@@ -16,17 +16,3 @@ Readonly mode will block all authors and front-end events from changing any of y
 ## Installation & Updating
 
 Information about [installing and updating extensions](http://symphony-cms.com/learn/tasks/view/install-an-extension/) can be found in the Symphony documentation at <http://symphony-cms.com/learn/>.
-
-## Change Log
-
-**Version 1.0**
-
-- Initial Version. Supports readonly mode for backend and events.
-
-**Version 1.1**
-
-- Compatibility with Symphony 2.2
-
-**Version 1.2**
-
-- Readonly-state added to param pool
