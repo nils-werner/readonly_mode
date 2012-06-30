@@ -2,16 +2,6 @@
 
 	Class extension_readonly_mode extends Extension{
 
-		public function about(){
-			return array('name' => 'Readonly Mode',
-						 'version' => '1.2',
-						 'release-date' => '2010-04-23',
-						 'author' => array('name' => 'Nils Werner',
-										   'website' => 'http://www.phoque.de',
-										   'email' => 'nils.werner@gmail.com')
-				 		);
-		}
-		
 		public function getSubscribedDelegates(){
 			return array(
 						array(
