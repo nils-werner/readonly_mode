@@ -50,13 +50,11 @@
 		
 		public function install(){
 			Symphony::Configuration()->set('enabled', 'no','readonly_mode');
-			Administration::instance()->saveConfig();
-			return true;
+			return Symphony::Configuration()->write();
 		}
 		
 		public function uninstall(){
 			Symphony::Configuration()->remove('readonly_mode');
-			Administration::instance()->saveConfig();
 		}
 		
 		public function __appendAlert($context){
@@ -66,7 +64,7 @@
 			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes'){
 				$text = __('This site is currently in readonly mode.');
 				if($this->isDeveloper())
-					$text .= ' <a href="' . URL . '/symphony/system/preferences/?action=toggle-readonly-mode&amp;redirect=' . getCurrentPage() . '">' . __('Restore?') . '</a>';
+					$text .= ' <a href="' . SYMPHONY_URL . '/system/preferences/?action=toggle-readonly-mode&amp;redirect=' . getCurrentPage() . '">' . __('Restore?') . '</a>';
 				Administration::instance()->Page->pageAlert($text, Alert::NOTICE);
 			}
 		}
@@ -105,7 +103,7 @@
 				$value = (Symphony::Configuration()->get('enabled', 'readonly_mode') == 'no' ? 'yes' : 'no');					
 				Symphony::Configuration()->set('enabled', $value, 'readonly_mode');
 				Administration::instance()->saveConfig();
-				redirect((isset($_REQUEST['redirect']) ? URL . '/symphony' . $_REQUEST['redirect'] : $this->_Parent->getCurrentPageURL() . '/'));
+				redirect((isset($_REQUEST['redirect']) ? SYMPHONY_URL . $_REQUEST['redirect'] : Administration::instance()->getCurrentPageURL() . '/'));
 			}
 			
 		}
@@ -121,7 +119,7 @@
 		}
 		
 		public function preEvent($context) {
-			if($context["parent"]->Configuration->get('enabled', 'readonly_mode') == 'yes') {
+			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes') {
 				$context['messages'][] = array(
 					'readonly', FALSE, __("Events have been disabled temporarily.")
 				);
