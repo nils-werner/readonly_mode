@@ -59,8 +59,6 @@
 		
 		public function __appendAlert($context){
 			
-			if(!is_null($context['alert'])) return;
-			
 			if(Symphony::Configuration()->get('enabled', 'readonly_mode') == 'yes'){
 				$text = __('This site is currently in readonly mode.');
 				if($this->isDeveloper())
